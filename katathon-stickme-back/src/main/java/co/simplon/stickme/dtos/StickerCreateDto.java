@@ -4,7 +4,7 @@ public class StickerCreateDto {
 
     private String name;
     private String imageUrl;
-    private String Description;
+    private String description;
     private Long chosenAspectId;
     private Long chosenSizeId;
     private float price;
@@ -29,11 +29,11 @@ public class StickerCreateDto {
     }
 
     public String getDescription() {
-	return Description;
+	return description;
     }
 
     public void setDescription(String description) {
-	Description = description;
+	this.description = description;
     }
 
     public Long getChosenAspectId() {
@@ -63,7 +63,7 @@ public class StickerCreateDto {
     @Override
     public String toString() {
 	return "{name=" + name + ", imageUrl=" + imageUrl
-		+ ", Description=" + Description
+		+ ", Description=" + description
 		+ ", chosenAspectId=" + chosenAspectId
 		+ ", chosenSizeId=" + chosenSizeId
 		+ ", price=" + price + "}";
