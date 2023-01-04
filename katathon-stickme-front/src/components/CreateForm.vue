@@ -1,5 +1,10 @@
 <script>
+    import { useVuelidate } from '@vuelidate/core'
+
     export default {
+        setup () {
+        return { v$: useVuelidate() }
+        },
         data() {
             return {
                 labels : {
@@ -13,21 +18,20 @@
                     submit: 'Create',
                     toastTitle: 'StickMe',
                     toastMessage: 'Sticker created with success.'
-                },
-                littleToast : document.getElementById('liveToast')
-                    
-                
+                }                        
             }
         },
-
         methods: {
-            toast() {
-                const toast = new bootstrap.Toast(this.littleToast);
-                toast.show();
-                console.log("ceci devrait être un toast");
-           }
-
-
+            submit() {
+                const form = document.querySelector("form");
+                form.addEventListener("submit", (event) => {
+                    event.preventDefault();
+                    form.reset();
+                    const toastLiveExample = document.getElementById('liveToast');
+                    const toast = new bootstrap.Toast(toastLiveExample)
+                    toast.show()
+                 })
+            }
         }
     }
 </script>
@@ -85,7 +89,7 @@
                 
             <div class="row">
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end margin">
-                    <button @submit="toast" type="submit" class="btn btn-primary" id="submit-button">{{ labels.submit }}</button>
+                    <button @click="submit" type="submit" class="btn btn-primary" id="submit-button">{{ labels.submit }}</button>
                 </div>
             </div>
 
