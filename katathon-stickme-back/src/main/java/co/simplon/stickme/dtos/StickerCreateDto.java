@@ -1,13 +1,15 @@
 package co.simplon.stickme.dtos;
 
+import java.math.BigDecimal;
+
 public class StickerCreateDto {
 
     private String name;
     private String imageUrl;
     private String description;
-    private Long chosenAspectId;
-    private Long chosenSizeId;
-    private float price;
+    private Long aspectId;
+    private Long sizeId;
+    private BigDecimal price;
 
     public StickerCreateDto() {
     }
@@ -36,37 +38,36 @@ public class StickerCreateDto {
 	this.description = description;
     }
 
-    public Long getChosenAspectId() {
-	return chosenAspectId;
+    public Long getAspectId() {
+	return aspectId;
     }
 
-    public void setChosenAspectId(Long chosenAspectId) {
-	this.chosenAspectId = chosenAspectId;
+    public void setAspectId(Long aspectId) {
+	this.aspectId = aspectId;
     }
 
-    public Long getChosenSizeId() {
-	return chosenSizeId;
+    public Long getSizeId() {
+	return sizeId;
     }
 
-    public void setChosenSizeId(Long chosenSizeId) {
-	this.chosenSizeId = chosenSizeId;
+    public void setSizeId(Long sizeId) {
+	this.sizeId = sizeId;
     }
 
-    public float getPrice() {
+    public BigDecimal getPrice() {
 	return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(BigDecimal price) {
 	this.price = price;
     }
 
     @Override
     public String toString() {
 	return "{name=" + name + ", imageUrl=" + imageUrl
-		+ ", Description=" + description
-		+ ", chosenAspectId=" + chosenAspectId
-		+ ", chosenSizeId=" + chosenSizeId
-		+ ", price=" + price + "}";
+		+ ", description=" + description
+		+ ", aspectId=" + aspectId + ", sizeId="
+		+ sizeId + ", price=" + price + "}";
     }
 
 }

@@ -36,13 +36,14 @@ public class StickerServiceImpl implements StickerService {
 	sticker.setName(inputs.getName());
 	sticker.setImageUrl(inputs.getImageUrl());
 	sticker.setDescription(inputs.getDescription());
-	Long chosenSizeId = inputs.getChosenSizeId();
-	Size size = sizes.getReferenceById(chosenSizeId);
-	sticker.setChosenSize(size);
-	Long chosenAspectId = inputs.getChosenAspectId();
+	Long sizeId = inputs.getSizeId();
+	Size size = sizes.getReferenceById(sizeId);
+	sticker.setSize(size);
+	Long aspectId = inputs.getAspectId();
 	Aspect aspect = aspects
-		.getReferenceById(chosenAspectId);
-	sticker.setChosenAspect(aspect);
+		.getReferenceById(aspectId);
+	sticker.setAspect(aspect);
+	sticker.setPrice(inputs.getPrice());
 	LocalDateTime createdAt = LocalDateTime.now();
 	sticker.setCreatedAt(createdAt);
 	this.stickers.save(sticker);
