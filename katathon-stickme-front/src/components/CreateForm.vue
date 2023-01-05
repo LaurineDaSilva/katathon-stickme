@@ -30,7 +30,7 @@
                     aspectId: '',
                     price: ''
                 },
-                submitted: false ,
+                submitted: false 
             };
         },
 
@@ -61,7 +61,7 @@
 
         methods: {
             handleSubmit() {
-                    //create toast and reset form
+                    //*******create toast and reset form******
                     const form = document.querySelector("form");
                     const toastLive = document.getElementById('liveToast');
                     const toast = new bootstrap.Toast(toastLive)
@@ -69,23 +69,16 @@
                     form.reset();
                     
                     
-                    // validation form
-                    this.submitted = true;
-
-                    this.v$.$validate();
-                    if (this.v$.$invalid) {
-                        console.log("lindsay")
-                    }
-                    console.log("success)")
-
-                    // if (!result) {
-                        // this.isInvalid
-                        // console.log("test")
-                        // return
+                    // *******validation form*******
                     
-                    // }
-                    console.log("the form is complete")
-
+                    //Returns a Promise with a boolean, which resolves once all validators finish.
+                    this.v$.$validate(); 
+                    if (!this.v$.$invalid) {
+                        console.log("lindsay")
+                        
+                        this.submitted = true;
+                    }
+                    console.log("success")  
                 }
                 
             }, 
