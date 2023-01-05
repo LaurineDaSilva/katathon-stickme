@@ -3,9 +3,11 @@
     import { required } from '@vuelidate/validators'
 
     export default {
-        setup () {
+
+        setup() {
         return { v$: useVuelidate() }
         },
+
         data() {
             return {
                 labels : {
@@ -13,22 +15,22 @@
                     name: 'Name',
                     image: 'Image URL',
                     description: 'Description',
-                    size: 'Size',
-                    aspect: 'Aspect',
+                    sizeId: 'Size',
+                    aspectId: 'Aspect',
                     price: 'Price',
                     submit: 'Create',
                     toastTitle: 'StickMe',
                     toastMessage: 'Sticker created with success.'
                 },
-                form: {
+                form: { //data model
                     name: '',
                     image: '',
                     description: '',
-                    size: '',
-                    aspect: '',
+                    sizeId: '',
+                    aspectId: '',
                     price: ''
                 },
-                submitted: false 
+                submitted: false ,
             };
         },
 
@@ -58,32 +60,39 @@
         },
 
         methods: {
-            submit() {
-                const form = document.querySelector("form");
-                form.addEventListener("submit", (event) => {
-                    event.preventDefault();
-                    form.reset();
-                    const toastLiveExample = document.getElementById('liveToast');
-                    const toast = new bootstrap.Toast(toastLiveExample)
+            handleSubmit() {
+                    //create toast and reset form
+                    const form = document.querySelector("form");
+                    const toastLive = document.getElementById('liveToast');
+                    const toast = new bootstrap.Toast(toastLive)
                     toast.show()
-                })
-            }, 
-            handleSubmit(e) {
-                
+                    form.reset();
+                    
+                    
+                    // validation form
+                    this.submitted = true;
 
-                this.submitted = true;
+                    this.v$.$validate();
+                    if (this.v$.$invalid) {
+                        console.log("lindsay")
+                    }
+                    console.log("success)")
 
-                this.$v.$validate(); //$touch();
-                if (this.$v.$invalid) {
-                    return
+                    // if (!result) {
+                        // this.isInvalid
+                        // console.log("test")
+                        // return
+                    
+                    // }
+                    console.log("the form is complete")
+
                 }
-                console.log("ok");
-            }    
+                
+            }, 
+        }  
             // touch() => a property on each Vuelidate object/property that allows us to individually validate a value. 
-            //validate() => will validate all of the inputs and, like touch, update the Vuelidate objects
-       
-            }
-        }
+            // validate() => will validate all of the inputs and, like touch, update the Vuelidate objects
+        
     
         
 
@@ -96,26 +105,26 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label for="name" class="form-label">{{ labels.name }}</label>
-                        <input type="text" v-model="form.name" class="form-control user-input" id="name" required minlength="1" maxlength="100"/>
+                        <input type="text" v-model="form.name" :class="{'is-invalid' : submitted}" class="form-control user-input" id="name" required minlength="1" maxlength="100"/>
                     </div>
 
                     <div class="col-md-6">
                         <label for="image" class="form-label">{{ labels.image }}</label>
-                        <input type="text" v-model="form.image" class="form-control user-input" id="image" required minlength="1" maxlength="300"/>
+                        <input type="text" v-model="form.image" :class="{'is-invalid' : submitted}" class="form-control user-input" id="image" required minlength="1" maxlength="300"/>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
                         <label for="description" class="form-label">{{ labels.description }} </label>
-                        <textarea v-model="form.description" class="form-control user-input" id="description" rows="4" required minlength="1" maxlength="1000"></textarea>
+                        <textarea v-model="form.description" :class="{'is-invalid' : submitted}" class="form-control user-input" id="description" rows="4" required minlength="1" maxlength="1000"></textarea>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="size" class="form-label">{{ labels.size }}</label>
-                        <select v-model="form.size" class="form-select user-input" id="size" required>
+                        <label for="size" class="form-label">{{ labels.sizeId }}</label>
+                        <select v-model="form.sizeId" :class="{'is-invalid' : submitted}" class="form-select user-input" id="size" required>
                             <option value="" selected></option>
                             <option value="1">Small</option>
                             <option value="2">Medium</option>
@@ -124,8 +133,8 @@
                     </div>
                 
                     <div class="col-md-4">
-                        <label for="aspect" class="form-label">{{ labels.aspect }}</label>
-                        <select v-model="form.aspect" class="form-select user-input" id="aspect" required>
+                        <label for="aspect" class="form-label">{{ labels.aspectId }}</label>
+                        <select v-model="form.aspectId" :class="{'is-invalid' : submitted}" class="form-select user-input" id="aspect" required>
                             <option value="" selected></option>
                             <option value="1">Matte</option>
                             <option value="2">Glossy</option>
@@ -136,14 +145,14 @@
                         <label for="price" class="form-label">{{ labels.price }}</label>
                         <div class="input-group">
                             <span class="input-group-text">€</span>
-                            <input type="number" v-model="form.price" class="form-control user-input" id="price" required step="0.01" min="1" max="100.00"/>
+                            <input type="number" v-model="form.price" :class="{'is-invalid' : submitted}" class="form-control user-input" id="price" required step="0.01" min="1" max="100.00"/>
                         </div>
                     </div>
                 </div>
                 
             <div class="row">
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end margin">
-                    <button @click="submit" type="submit" class="btn btn-primary" id="submit-button">{{ labels.submit }}</button>
+                    <button type="submit" class="btn btn-primary" id="submit-button">{{ labels.submit }}</button>
                 </div>
             </div>
 
@@ -158,6 +167,5 @@
                     </div>
                 </div>
             </div>
-              
         </form>
 </template>
