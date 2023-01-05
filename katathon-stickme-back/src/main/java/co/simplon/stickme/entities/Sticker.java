@@ -1,5 +1,6 @@
 package co.simplon.stickme.entities;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -29,16 +30,16 @@ public class Sticker {
     @Column(name = "description")
     private String description;
 
-    @JoinColumn(name = "chosen_size_id")
+    @JoinColumn(name = "size_id")
     @ManyToOne
-    private Size chosenSize;
+    private Size size;
 
-    @JoinColumn(name = "chosen_aspect_id")
+    @JoinColumn(name = "aspect_id")
     @ManyToOne
-    private Aspect chosenAspect;
+    private Aspect aspect;
 
     @Column(name = "price")
-    private float price;
+    private BigDecimal price;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -78,27 +79,27 @@ public class Sticker {
 	this.description = description;
     }
 
-    public Size getChosenSize() {
-	return chosenSize;
+    public Size getSize() {
+	return size;
     }
 
-    public void setChosenSize(Size chosenSize) {
-	this.chosenSize = chosenSize;
+    public void setSize(Size size) {
+	this.size = size;
     }
 
-    public Aspect getChosenAspect() {
-	return chosenAspect;
+    public Aspect getAspect() {
+	return aspect;
     }
 
-    public void setChosenAspect(Aspect chosenAspect) {
-	this.chosenAspect = chosenAspect;
+    public void setAspect(Aspect aspect) {
+	this.aspect = aspect;
     }
 
-    public float getPrice() {
+    public BigDecimal getPrice() {
 	return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(BigDecimal price) {
 	this.price = price;
     }
 
@@ -114,10 +115,9 @@ public class Sticker {
     public String toString() {
 	return "{id=" + id + ", name=" + name
 		+ ", imageUrl=" + imageUrl
-		+ ", description=" + description
-		+ ", chosenSize=" + chosenSize
-		+ ", chosenAspect=" + chosenAspect
-		+ ", price=" + price + ", createdAt="
-		+ createdAt + "}";
+		+ ", description=" + description + ", size="
+		+ size + ", aspect=" + aspect + ", price="
+		+ price + ", createdAt=" + createdAt + "}";
     }
+
 }
