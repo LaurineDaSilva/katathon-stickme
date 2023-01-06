@@ -29,8 +29,8 @@
                     sizeId: '',
                     aspectId: '',
                     price: ''
-                },
-                submitted: false 
+                }
+                
             };
         },
 
@@ -60,16 +60,23 @@
         },
 
         methods: {
-            handleSubmit() {
+            async handleSubmit() {
 
-                    //*******create toast and reset form******
+                    
+                    
+                    // *******validation form*******
+                    
+                    //Returns a Promise with a boolean, which resolves once all validators finish.
+                    
+                    const valid = await this.v$.$validate(); 
+                    if (valid) {
+                        //*******create toast and reset form******
                     const form = document.querySelector("form");
                     const toastLive = document.getElementById('liveToast');
                     const toast = new bootstrap.Toast(toastLive)
                     toast.show()
                     form.reset();
 
-                    //*******send data to database******
                     //*******send data to database******
                    const data = {
                         name : this.form.name,
@@ -84,17 +91,7 @@
                     console.log(dataJson);
                     fetch("http://localhost:8080/stickers", { method: "POST", headers: {"Content-Type": "application/json"}, body: dataJson});
                     
-                    
-                    // *******validation form*******
-                    
-                    //Returns a Promise with a boolean, which resolves once all validators finish.
-                    this.v$.$validate(); 
-                    if (!this.v$.$invalid) {
-                        console.log("lindsay")
-                        
-                        this.submitted = true;
-                    }
-                    console.log("success")  
+                    } 
                 }
                 
             }, 
@@ -114,26 +111,26 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label for="name" class="form-label">{{ labels.name }}</label>
-                        <input type="text" v-model="form.name" :class="{'is-invalid' : submitted}" class="form-control user-input" id="name" required minlength="1" maxlength="100"/>
+                        <input type="text" v-model="form.name" :class="{'is-invalid' : v$.form.name.$error}" class="form-control user-input" id="name" />
                     </div>
 
                     <div class="col-md-6">
                         <label for="imageUrl" class="form-label">{{ labels.imageUrl }}</label>
-                        <input type="text" v-model="form.imageUrl" :class="{'is-invalid' : submitted}" class="form-control user-input" id="imageUrl" required minlength="1" maxlength="300"/>
+                        <input type="text" v-model="form.imageUrl" :class="{'is-invalid' : v$.form.imageUrl.$error}" class="form-control user-input" id="imageUrl" />
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
                         <label for="description" class="form-label">{{ labels.description }} </label>
-                        <textarea v-model="form.description" :class="{'is-invalid' : submitted}" class="form-control user-input" id="description" rows="4" required minlength="1" maxlength="1000"></textarea>
+                        <textarea v-model="form.description" :class="{'is-invalid' : v$.form.description.$error}" class="form-control user-input" id="description" rows="4" ></textarea>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-4">
                         <label for="sizeId" class="form-label">{{ labels.sizeId }}</label>
-                        <select v-model="form.sizeId" :class="{'is-invalid' : submitted}" class="form-select user-input" id="sizeId" required>
+                        <select v-model="form.sizeId" :class="{'is-invalid' : v$.form.sizeId.$error}" class="form-select user-input" id="sizeId" >
                             <option value="" selected></option>
                             <option value="1">Small</option>
                             <option value="2">Medium</option>
@@ -143,7 +140,7 @@
                 
                     <div class="col-md-4">
                         <label for="aspectId" class="form-label">{{ labels.aspectId }}</label>
-                        <select v-model="form.aspectId" :class="{'is-invalid' : submitted}" class="form-select user-input" id="aspectId" required>
+                        <select v-model="form.aspectId" :class="{'is-invalid' : v$.form.aspectId.$error}" class="form-select user-input" id="aspectId" >
                             <option value="" selected></option>
                             <option value="1">Matte</option>
                             <option value="2">Glossy</option>
@@ -154,7 +151,7 @@
                         <label for="price" class="form-label">{{ labels.price }}</label>
                         <div class="input-group">
                             <span class="input-group-text">€</span>
-                            <input type="number" v-model="form.price" :class="{'is-invalid' : submitted}" class="form-control user-input" id="price" required step="0.01" min="1" max="100.00"/>
+                            <input type="number" v-model="form.price" :class="{'is-invalid' : v$.form.price.$error}" class="form-control user-input" id="price"  />
                         </div>
                     </div>
                 </div>
