@@ -78,18 +78,10 @@
                     form.reset();
 
                     //*******send data to database******
-                   const data = {
-                        name : this.form.name,
-                        imageUrl: this.form.imageUrl,
-                        description: this.form.description,
-                        sizeId: this.form.sizeId,
-                        aspectId: this.form.aspectId,
-                        price: this.form.price
-                    }; 
-                    const dataJson = JSON.stringify(data);
+                    const dataJson = JSON.stringify(this.form);
+                    console.log(dataJson);
 
                     fetch("http://localhost:8080/stickers", { method: "POST", headers: {"Content-Type": "application/json"}, body: dataJson});
-                    
                     } 
                 }
                 
