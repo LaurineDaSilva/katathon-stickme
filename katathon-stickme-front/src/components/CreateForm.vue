@@ -88,7 +88,6 @@
                     }; 
                     const dataJson = JSON.stringify(data);
 
-                    console.log(dataJson);
                     fetch("http://localhost:8080/stickers", { method: "POST", headers: {"Content-Type": "application/json"}, body: dataJson});
                     
                     } 
