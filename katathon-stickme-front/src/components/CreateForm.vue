@@ -13,7 +13,7 @@
                 labels : {
                     message: 'Create a sticker',
                     name: 'Name',
-                    image: 'Image URL',
+                    imageUrl: 'Image URL',
                     description: 'Description',
                     sizeId: 'Size',
                     aspectId: 'Aspect',
@@ -24,7 +24,7 @@
                 },
                 form: { //data model
                     name: '',
-                    image: '',
+                    imageUrl: '',
                     description: '',
                     sizeId: '',
                     aspectId: '',
@@ -40,16 +40,16 @@
                     name: {
                         required,
                     },
-                    image: {
+                    imageUrl: {
                         required
                     },
                     description: {
                         required
                     },
-                    size: {
+                    sizeId: {
                         required
                     },
-                    aspect: {
+                    aspectId: {
                         required
                     },
                     price: {
@@ -61,12 +61,28 @@
 
         methods: {
             handleSubmit() {
+
                     //*******create toast and reset form******
                     const form = document.querySelector("form");
                     const toastLive = document.getElementById('liveToast');
                     const toast = new bootstrap.Toast(toastLive)
                     toast.show()
                     form.reset();
+
+                    //*******send data to database******
+                    //*******send data to database******
+                   const data = {
+                        name : this.form.name,
+                        imageUrl: this.form.imageUrl,
+                        description: this.form.description,
+                        sizeId: this.form.sizeId,
+                        aspectId: this.form.aspectId,
+                        price: this.form.price
+                    }; 
+                    const dataJson = JSON.stringify(data);
+
+                    console.log(dataJson);
+                    fetch("http://localhost:8080/stickers", { method: "POST", headers: {"Content-Type": "application/json"}, body: dataJson});
                     
                     
                     // *******validation form*******
@@ -102,8 +118,8 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="image" class="form-label">{{ labels.image }}</label>
-                        <input type="text" v-model="form.image" :class="{'is-invalid' : submitted}" class="form-control user-input" id="image" required minlength="1" maxlength="300"/>
+                        <label for="imageUrl" class="form-label">{{ labels.imageUrl }}</label>
+                        <input type="text" v-model="form.imageUrl" :class="{'is-invalid' : submitted}" class="form-control user-input" id="imageUrl" required minlength="1" maxlength="300"/>
                     </div>
                 </div>
 
@@ -116,8 +132,8 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="size" class="form-label">{{ labels.sizeId }}</label>
-                        <select v-model="form.sizeId" :class="{'is-invalid' : submitted}" class="form-select user-input" id="size" required>
+                        <label for="sizeId" class="form-label">{{ labels.sizeId }}</label>
+                        <select v-model="form.sizeId" :class="{'is-invalid' : submitted}" class="form-select user-input" id="sizeId" required>
                             <option value="" selected></option>
                             <option value="1">Small</option>
                             <option value="2">Medium</option>
@@ -126,8 +142,8 @@
                     </div>
                 
                     <div class="col-md-4">
-                        <label for="aspect" class="form-label">{{ labels.aspectId }}</label>
-                        <select v-model="form.aspectId" :class="{'is-invalid' : submitted}" class="form-select user-input" id="aspect" required>
+                        <label for="aspectId" class="form-label">{{ labels.aspectId }}</label>
+                        <select v-model="form.aspectId" :class="{'is-invalid' : submitted}" class="form-select user-input" id="aspectId" required>
                             <option value="" selected></option>
                             <option value="1">Matte</option>
                             <option value="2">Glossy</option>
