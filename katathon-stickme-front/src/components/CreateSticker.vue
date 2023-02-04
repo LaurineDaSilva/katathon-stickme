@@ -52,9 +52,9 @@
                     aspectId: {
                         required
                     },
-                    price: {
+                   price: {
                         required
-                    }
+                    } 
                 },
             }
         },
@@ -76,12 +76,13 @@
                     const toast = new bootstrap.Toast(toastLive)
                     toast.show()
                     form.reset();
-
+                    
                     //*******send data to database******
                     const dataJson = JSON.stringify(this.form);
                     console.log(dataJson);
 
                     fetch("http://localhost:8080/stickers", { method: "POST", headers: {"Content-Type": "application/json"}, body: dataJson});
+                    
                     } 
                 }
                 
@@ -142,7 +143,7 @@
                         <label for="price" class="form-label">{{ labels.price }}</label>
                         <div class="input-group">
                             <span class="input-group-text">€</span>
-                            <input type="number" v-model="form.price" :class="{'is-invalid' : v$.form.price.$error}" class="form-control user-input" id="price"  />
+                            <input type="number" v-model="form.price" :class="{'is-invalid' : v$.form.price.$error}" class="form-control user-input" id="price" step="0.01" /> 
                         </div>
                     </div>
                 </div>
