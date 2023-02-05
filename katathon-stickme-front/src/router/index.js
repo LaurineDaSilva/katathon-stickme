@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import ViewAllStickers from '../components/ViewAllStickers.vue'
 import CreateSticker from '../components/CreateSticker.vue'
 
 const router = createRouter({
@@ -7,6 +8,11 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
+      component: ViewAllStickers
+    },
+    {
+      path: '/create',
+      name: 'create',
       component: CreateSticker
     },
   ]
